@@ -1,0 +1,223 @@
+% ============================================================
+%  Chapter 2 Tutorial (Feynman-First)
+%  Source: Chapter_2.pdf (Partha Pratim Das thesis)
+%  Figures stored in: figures/
+%  Figure naming: Parth_ch2_Fig2_[N]_page[XX].png
+%  Workflow rules: see TUTORIAL_WORKFLOW.md
+% ============================================================
+
+\documentclass[12pt, a4paper]{article}
+
+% ---- core packages ----
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{bm}
+\usepackage{siunitx}
+
+% ---- figures ----
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+
+% ---- layout ----
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=3cm, right=2.8cm]{geometry}
+\usepackage{parskip}
+\setlength{\parskip}{6pt}
+\setlength{\parindent}{0pt}
+
+% ---- hyperlinks ----
+\usepackage[colorlinks=true, linkcolor=blue!60!black, citecolor=blue!50!black]{hyperref}
+\usepackage{bookmark}
+\makeatletter
+\pdfstringdefDisableCommands{%
+    \def\vspace#1{}%
+    \def\rule#1#2{}%
+    \def\color#1{}%
+    \let\leavevmode@ifvmode\relax%
+    \def\,{ }%
+}
+\makeatother
+
+% ---- styled boxes ----
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% ---- tables ----
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+
+% ---- section formatting ----
+\usepackage{titlesec}
+\usepackage{xcolor}
+
+\definecolor{parthblue}{RGB}{15, 58, 112}
+\definecolor{parthorange}{RGB}{185, 72, 10}
+\definecolor{parthgreen}{RGB}{10, 100, 42}
+\definecolor{parthred}{RGB}{170, 25, 25}
+\definecolor{lightblue}{RGB}{216, 232, 252}
+\definecolor{lightorange}{RGB}{255, 244, 220}
+\definecolor{lightgreen}{RGB}{216, 247, 228}
+\definecolor{lightred}{RGB}{255, 228, 228}
+\definecolor{lightgray}{RGB}{245, 245, 245}
+
+\titleformat{\section}{\large\bfseries\color{parthblue}}{{\thesection.}}{0.5em}{}
+            [\vspace{-4pt}\rule{\textwidth}{0.5pt}]
+\titleformat{\subsection}{\normalsize\bfseries\color{parthblue!80!black}}{{\thesubsection}}{0.5em}{}
+
+% ---- tcolorbox styles ----
+\newtcolorbox{circuitbox}[1][Circuit Description]{
+    colback=lightblue, colframe=parthblue, coltitle=white,
+    fonttitle=\bfseries\small, title={#1},
+    breakable, enhanced, left=4pt, right=4pt, top=4pt, bottom=4pt}
+
+\newtcolorbox{statebox}[1][State Variables \& Parameters]{
+    colback=lightorange, colframe=parthorange, coltitle=white,
+    fonttitle=\bfseries\small, title={#1},
+    breakable, enhanced, left=4pt, right=4pt, top=4pt, bottom=4pt}
+
+\newtcolorbox{eqnbox}[1][Governing Equations]{
+    colback=lightgreen, colframe=parthgreen, coltitle=white,
+    fonttitle=\bfseries\small, title={#1},
+    breakable, enhanced, left=4pt, right=4pt, top=4pt, bottom=4pt}
+
+\newtcolorbox{physbox}[1][Physical Interpretation]{
+    colback=lightgray, colframe=gray!60, coltitle=white,
+    fonttitle=\bfseries\small, title={#1},
+    breakable, enhanced, left=4pt, right=4pt, top=4pt, bottom=4pt}
+
+\newtcolorbox{warningbox}[1][Watch Out]{
+    colback=lightred, colframe=parthred, coltitle=white,
+    fonttitle=\bfseries\small, title={#1},
+    breakable, enhanced, left=4pt, right=4pt, top=4pt, bottom=4pt}
+
+% ---- helpers ----
+\newcommand{\figref}[1]{Figure~\ref{#1}}
+
+% ---- figure entry macro ----
+% Usage: \figentry{label}{filename-no-ext}{caption}{width}
+\newcommand{\figentry}[4]{%
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=#4\textwidth]{#2}
+        \caption{#3}
+        \label{#1}
+    \end{figure}%
+}
+
+% ============================================================
+\title{\textbf{Chapter 2 Tutorial: A Comprehensive Comparison of}\\[2pt]
+       \textbf{Six-Phase and Three-Phase Drives}\\[6pt]
+       \large Feynman-First, Derivation-First Notes (Grad Level)}
+\author{}
+\date{\today}
+% ============================================================
+
+\begin{document}
+\maketitle
+\tableofcontents
+\clearpage
+
+% ============================================================
+\section{How to Use This Tutorial}
+\label{sec:how_to_use}
+% ============================================================
+
+This document rewrites Chapter~2 of the thesis as a step-by-step tutorial.
+Every major result is derived from elementary principles (phasors, KCL/KVL,
+power balance, and PWM timing), while preserving the original notation.
+
+\begin{warningbox}[Workflow Gate]
+We write one section/subsection at a time. If you do not explicitly approve a
+section, the next section will not be written.
+\end{warningbox}
+
+\begin{statebox}[Assets]
+Figures are extracted into `figures/` with filenames like
+`Parth\_ch2\_Fig2\_15\_page64.png`.
+The figure context index is in `figures/Parth\_ch2\_context.md`.
+\end{statebox}
+
+\clearpage
+
+% ============================================================
+\section{Lesson Plan (Chapter 2 Split)}
+\label{sec:lesson_plan}
+% ============================================================
+
+We split Chapter~2 into lessons to keep each lesson self-contained and checkable.
+
+\begin{enumerate}
+    \item \textbf{Lesson 1: Configurations and Comparison Metrics}
+    \item \textbf{Lesson 2: Torque Ripple}
+    \item \textbf{Lesson 3: DC Bus Voltage Requirement}
+    \item \textbf{Lesson 4: DC Bus Capacitor Requirement}
+    \item \textbf{Lesson 5: CMV, Fault Tolerance, Efficiency, Conclusions}
+\end{enumerate}
+
+Each lesson will end with a short checkpoint: “explain in your own words.”
+
+\clearpage
+
+% ============================================================
+\section{Lesson 1: Configurations and Comparison Metrics (Section 2.1)}
+\label{sec:lesson1}
+% ============================================================
+
+% TODO (write after approval):
+% - Insert and explain Fig. 2.1 (spatial winding distribution)
+% - Define ASP vs SSP and 1N vs 2N configuration
+% - List the comparison metrics and why each matters
+
+\clearpage
+
+% ============================================================
+\section{Lesson 2: Torque Ripple (Section 2.2)}
+\label{sec:lesson2}
+% ============================================================
+
+% TODO (write after approval):
+% - Insert Fig. 2.2, Fig. 2.3
+% - Derive torque expressions and show harmonic-cancellation logic
+% - Use Table 2.1 (typeset later) to connect to measured harmonics
+
+\clearpage
+
+% ============================================================
+\section{Lesson 3: DC Bus Voltage Requirement (Section 2.3)}
+\label{sec:lesson3}
+% ============================================================
+
+% TODO (write after approval):
+% - Insert Fig. 2.4
+% - Derive Vdc,min and Mmax for three-phase, ASPI, SSPI
+
+\clearpage
+
+% ============================================================
+\section{Lesson 4: DC Bus Capacitor Requirement (Section 2.4)}
+\label{sec:lesson4}
+% ============================================================
+
+% TODO (write after approval):
+% - Insert Fig. 2.5–2.17 in the correct order
+% - Derive 3rd-harmonic ripple model (KCL at split DC bus)
+% - Derive switching-frequency ripple and Kcap,rpl interpretation
+
+\clearpage
+
+% ============================================================
+\section{Lesson 5: CMV, Fault Tolerance, Efficiency, Conclusions (Sections 2.5–2.8)}
+\label{sec:lesson5}
+% ============================================================
+
+% TODO (write after approval):
+% - Insert Fig. 2.18–2.23 (CMV + interleaving)
+% - Insert Table 2.2 and interpret (fault tolerance)
+% - Insert Fig. 2.24–2.28 and Table 2.3–2.4 (efficiency)
+% - Insert Fig. 2.29 (wrap-up tradeoff)
+
+\end{document}
