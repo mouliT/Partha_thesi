@@ -174,10 +174,98 @@ Each lesson will end with a short checkpoint: “explain in your own words.”
 \label{sec:lesson1}
 % ============================================================
 
-% TODO (write after approval):
-% - Insert and explain Fig. 2.1 (spatial winding distribution)
-% - Define ASP vs SSP and 1N vs 2N configuration
-% - List the comparison metrics and why each matters
+\textit{This lesson defines what “three-phase”, “asymmetrical six-phase (ASP)”, and
+“symmetrical six-phase (SSP)” PMSMs mean in space, and sets up the comparison
+axes used throughout Chapter~2.}
+
+\figentry{fig:2_1}{Parth_ch2_Fig2_1_page48}
+{Figure 2.1: Spatial winding distribution of three-phase, asymmetrical, and symmetrical six-phase PMSMs.}{0.95}
+
+\begin{circuitbox}[What Figure 2.1 Is Actually Saying]
+Think of the stator as a circle. Each phase winding occupies a fixed direction in
+space. When the rotor turns, the induced back-EMF in each phase depends on the
+relative angle between the rotor flux and that winding direction.
+
+Figure~2.1 shows only \textbf{where the windings sit in space}:
+\begin{enumerate}
+    \item \textbf{Three-phase PMSM (Fig.~2.1(a)).}
+    Three windings (R, Y, B) are placed 120$^{\circ}$ apart (electrical).
+    Their star point is labeled N1.
+
+    \item \textbf{Six-phase PMSM = two three-phase sets (Fig.~2.1(b,c)).}
+    One set is RYB and the other is UVW. Each set is internally 120$^{\circ}$ apart.
+    The only design choice is the \emph{spatial shift} between the two sets.
+
+    \item \textbf{ASP vs SSP.}
+    ASP means the UVW set is shifted by 30$^{\circ}$ relative to RYB.
+    SSP means it is shifted by 60$^{\circ}$.
+\end{enumerate}
+\end{circuitbox}
+
+\begin{statebox}[Key Definitions (Notation Matches the Thesis)]
+\textbf{RYB set:} a standard three-phase set with 120$^{\circ}$ phase displacement.
+
+\textbf{UVW set:} a second three-phase set with 120$^{\circ}$ phase displacement.
+
+\textbf{Asymmetrical Six-Phase (ASP) PMSM:} two three-phase sets (RYB and UVW)
+separated by 30$^{\circ}$ in space (Fig.~2.1(b)).
+
+\textbf{Symmetrical Six-Phase (SSP) PMSM:} two three-phase sets (RYB and UVW)
+separated by 60$^{\circ}$ in space (Fig.~2.1(c)).
+
+\textbf{Neutral points:} Fig.~2.1 labels the star points as N1 (for RYB) and N2
+(for UVW). In practice, a six-phase machine may be used as:
+\begin{enumerate}
+    \item \textbf{2N connection:} N1 and N2 are kept separate (two neutrals).
+    \item \textbf{1N connection:} N1 and N2 are tied together (single neutral).
+\end{enumerate}
+The 1N vs 2N choice changes which zero-sequence / circulating currents can flow,
+which later changes DC-bus ripple and common-mode voltage behavior.
+\end{statebox}
+
+\begin{physbox}[Why the 30$^{\circ}$ vs 60$^{\circ}$ Shift Matters]
+If the machine back-EMF and flux linkage were perfectly sinusoidal, many outcomes
+would look similar across three-phase and six-phase.
+
+But the considered PMSM has \textbf{odd-order harmonics} in back-EMF.
+Those harmonics create torque ripple and can also inject low-frequency current
+components. The spatial shift between RYB and UVW decides whether a given harmonic
+from one set \textbf{adds} to the other set or \textbf{cancels}.
+
+That single geometric fact is the root cause of several Chapter~2 results:
+ASP cancels some harmonic torque ripple terms that do not cancel in SSP, while SSP
+has stronger cancellation in some DC-bus ripple and common-mode voltage mechanisms
+when carrier interleaving is used.
+\end{physbox}
+
+\begin{warningbox}[Two Common Confusions]
+\textbf{1) “Six-phase” does not mean 60$^{\circ}$ between every adjacent phase.}
+Each three-phase set is still 120$^{\circ}$ apart; ASP/SSP only sets the shift
+between the two sets.
+
+\textbf{2) Spatial angle is electrical.}
+The 30$^{\circ}$/60$^{\circ}$ in Fig.~2.1 are electrical angles (after accounting for
+pole pairs), because that is what aligns with back-EMF harmonics and torque.
+\end{warningbox}
+
+\subsection*{Comparison Axes Used in Chapter 2}
+
+Chapter~2 compares three drive options (three-phase, ASPI+ASP-PMSM, SSPI+SSP-PMSM)
+along these engineering axes:
+\begin{enumerate}
+    \item torque ripple,
+    \item DC bus voltage requirement,
+    \item DC bus capacitor requirement,
+    \item common-mode voltage (CMV),
+    \item fault tolerance (e.g., one-phase open circuit),
+    \item inverter efficiency.
+\end{enumerate}
+
+\begin{statebox}[Checkpoint (Explain in Your Own Words)]
+Looking at Fig.~2.1 only: what is the single difference between ASP and SSP?
+Also: what does “1N vs 2N” physically mean in terms of which neutral points are
+connected?
+\end{statebox}
 
 \clearpage
 
