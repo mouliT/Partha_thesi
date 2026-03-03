@@ -130,16 +130,41 @@ This document rewrites Chapter~2 of the thesis as a step-by-step tutorial.
 Every major result is derived from elementary principles (phasors, KCL/KVL,
 power balance, and PWM timing), while preserving the original notation.
 
-\begin{warningbox}[Workflow Gate]
-We write one section/subsection at a time. If you do not explicitly approve a
-section, the next section will not be written.
-\end{warningbox}
+This tutorial is meant to be read like a worked derivation notebook.
 
-\begin{statebox}[Assets]
-Figures are extracted into `figures/` with filenames like
-`Parth\_ch2\_Fig2\_15\_page64.png`.
-The figure context index is in `figures/Parth\_ch2\_context.md`.
-\end{statebox}
+\subsection*{Reading Strategy (Feynman-First)}
+
+For each technical result, the intended sequence is:
+\begin{enumerate}
+    \item \textbf{Start from a figure.} We point to what the figure is showing.
+    \item \textbf{Name the variables.} We state sign conventions and what each symbol means.
+    \item \textbf{Derive the equation.} We use only elementary tools (phasors, KCL/KVL, power balance).
+    \item \textbf{Interpret physically.} We explain what changes for three-phase vs ASP vs SSP.
+    \item \textbf{Checkpoint.} You restate the idea in your own words.
+\end{enumerate}
+
+\subsection*{Editing Workflow (Approval Gate)}
+
+We will write and revise \emph{one section or subsection at a time}.
+You review and explicitly approve ("green signal"). Only then will the next part
+be written.
+
+\subsection*{Assets}
+
+All extracted figures are in:
+\begin{center}
+\path{figures/}
+\end{center}
+
+Example filename:
+\begin{center}
+\path{Parth_ch2_Fig2_15_page64.png}
+\end{center}
+
+The authoritative captions and "Referenced in paper" lines are in:
+\begin{center}
+\path{figures/Parth_ch2_context.md}
+\end{center}
 
 \clearpage
 
