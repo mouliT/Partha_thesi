@@ -130,41 +130,23 @@ This document rewrites Chapter~2 of the thesis as a step-by-step tutorial.
 Every major result is derived from elementary principles (phasors, KCL/KVL,
 power balance, and PWM timing), while preserving the original notation.
 
-This tutorial is meant to be read like a worked derivation notebook.
-
-\subsection*{Reading Strategy (Feynman-First)}
-
-For each technical result, the intended sequence is:
-\begin{enumerate}
-    \item \textbf{Start from a figure.} We point to what the figure is showing.
-    \item \textbf{Name the variables.} We state sign conventions and what each symbol means.
-    \item \textbf{Derive the equation.} We use only elementary tools (phasors, KCL/KVL, power balance).
-    \item \textbf{Interpret physically.} We explain what changes for three-phase vs ASP vs SSP.
-    \item \textbf{Checkpoint.} You restate the idea in your own words.
-\end{enumerate}
-
-\subsection*{Editing Workflow (Approval Gate)}
-
-We will write and revise \emph{one section or subsection at a time}.
+\begin{warningbox}[Workflow Gate]
+We write and revise \emph{one section or subsection at a time}.
 You review and explicitly approve ("green signal"). Only then will the next part
 be written.
+\end{warningbox}
 
-\subsection*{Assets}
-
-All extracted figures are in:
-\begin{center}
-\path{figures/}
-\end{center}
-
-Example filename:
-\begin{center}
-\path{Parth_ch2_Fig2_15_page64.png}
-\end{center}
-
-The authoritative captions and "Referenced in paper" lines are in:
-\begin{center}
-\path{figures/Parth_ch2_context.md}
-\end{center}
+\begin{statebox}[How to Read (Feynman-First)]
+For each result, we follow the same sequence:
+\begin{enumerate}
+    \item \textbf{Start from a figure:} what is visibly happening?
+    \item \textbf{Name variables:} what does each symbol represent (and sign conventions)?
+    \item \textbf{Derive:} use elementary tools (phasors, KCL/KVL, power balance, PWM timing).
+    \item \textbf{Interpret:} what changes across three-phase, ASP, and SSP?
+\end{enumerate}
+At the end of every written section we add a \textbf{checkpoint question}:
+"Explain in your own words what problem was solved and what the key takeaway is."
+\end{statebox}
 
 \clearpage
 
