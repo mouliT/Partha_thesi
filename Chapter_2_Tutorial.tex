@@ -274,10 +274,79 @@ connected?
 \label{sec:lesson2}
 % ============================================================
 
-% TODO (write after approval):
-% - Insert Fig. 2.2, Fig. 2.3
-% - Derive torque expressions and show harmonic-cancellation logic
-% - Use Table 2.1 (typeset later) to connect to measured harmonics
+\textit{This lesson compares torque ripple between three-phase, ASP, and SSP PMSMs. Torque ripple arises from back-EMF harmonics interacting with currents, causing unwanted vibrations and noise. We see how the 30° vs 60° spatial shift between RYB and UVW sets enables harmonic cancellation in ASP for certain orders.}
+
+\figentry{fig:2_2}{Parth_ch2_Fig2_2_page49}{Figure 2.2: (a) Measured R phase back EMF of the SSP-PMSM. (b) The frequency spectrum of the back EMF at the speed of the motor (6750RPM or 450Hz). The back EMF contains all odd-order harmonics. Only one phase back EMF is shown. All other phases also have identical back EMF.}{0.95}
+
+\begin{circuitbox}[Back-EMF Harmonics: What Figure 2.2 Shows]
+PMSMs are not perfectly sinusoidal machines. The back-EMF (voltage induced when the rotor spins) has a fundamental (1st harmonic) plus higher odd harmonics (3rd, 5th, 7th, etc.).
+
+Figure 2.2(a) shows the measured back-EMF waveform for the R phase of the SSP-PMSM at 6750 RPM (450 Hz fundamental). It's not a pure sine wave — there are distortions.
+
+Figure 2.2(b) is the FFT (frequency spectrum): the fundamental at 450 Hz, plus 5th harmonic (2250 Hz), 7th (3150 Hz), etc. All odd multiples.
+
+Why odd harmonics? In PMSMs with distributed windings and rotor saliency, even harmonics are absent because the flux linkage is symmetric. Only odd harmonics exist due to nonlinear saturation or winding imperfections.
+\end{circuitbox}
+
+\begin{physbox}[Torque Ripple: Why It Matters]
+Torque ripple is the unwanted fluctuation in motor torque as the rotor spins. It causes vibrations, noise, and reduced efficiency. In electric vehicles, high ripple can lead to passenger discomfort or mechanical wear.
+
+In PMSMs, torque ripple mainly comes from two sources:
+\begin{enumerate}
+    \item Cogging torque: due to stator/rotor tooth interaction (not considered here).
+    \item Harmonic torque: interaction between back-EMF harmonics and stator currents.
+\end{enumerate}
+
+When currents are sinusoidal, but back-EMF has harmonics, the torque has ripple at the harmonic frequencies.
+
+For example, 5th harmonic back-EMF × fundamental current → 5th harmonic torque ripple.
+\end{physbox}
+
+\begin{eqnbox}[Deriving Torque Ripple from Harmonics]
+The electromagnetic torque in a PMSM is:
+
+\[ T = \frac{3}{2} p (\psi_d i_q - \psi_q i_d) \]
+
+But for harmonics, we expand the back-EMF as a Fourier series:
+
+\[ e_a = \sum_{n=1,3,5,\dots} E_n \sin(n \theta) \]
+
+where \(\theta\) is the electrical angle.
+
+The torque ripple component from the nth harmonic is approximately:
+
+\[ T_{ripple,n} \propto E_n I_{fundamental} \cos(n \delta) \]
+
+where \(\delta\) is the spatial shift between the RYB and UVW sets.
+
+For ASP (\(\delta = 30^\circ\)), certain harmonics (like 5th, 7th) have \(n \delta\) angles that lead to cancellation.
+
+For SSP (\(\delta = 60^\circ\)), different cancellation patterns.
+\end{eqnbox}
+
+\figentry{fig:2_3}{Parth_ch2_Fig2_3_page51}{Figure 2.3: Torque ripple for the back-EMF of Fig.2.2(a) for (a) three-phase PMSM (b) ASP-PMSM (c) SSP-PMSM. The torque ripple of three-phase and SSP-PMSM are the same. The torque ripple due to the 5th and 7th harmonics flux linkage is zero in ASP-PMSM.}{0.95}
+
+\begin{circuitbox}[Harmonic Cancellation in Multiphase Machines]
+Figure 2.3 shows simulated torque ripple waveforms for the three configurations.
+
+(a) Three-phase: baseline ripple.
+
+(b) ASP: lower ripple because 5th and 7th harmonic torques cancel due to the 30° shift.
+
+(c) SSP: similar to three-phase; the 60° shift doesn't cancel those harmonics as effectively.
+
+In ASP, the RYB and UVW sets produce opposing torque ripples from 5th and 7th harmonics, summing to zero.
+\end{circuitbox}
+
+\begin{statebox}[Key Takeaway]
+ASP PMSMs have lower torque ripple than three-phase or SSP because the 30° spatial shift causes 5th and 7th harmonic torque components to cancel between the two three-phase sets.
+
+SSP and three-phase have identical ripple for these harmonics.
+\end{statebox}
+
+\begin{statebox}[Checkpoint (Explain in Your Own Words)]
+What causes torque ripple in PMSMs? How does the spatial shift between RYB and UVW sets in six-phase machines affect torque ripple, particularly for the 5th and 7th harmonics?
+\end{statebox}
 
 \clearpage
 
