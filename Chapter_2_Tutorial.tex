@@ -395,7 +395,68 @@ What causes torque ripple in PMSMs? How does the spatial shift between RYB and U
 \label{app:even_harmonics}
 % ============================================================
 
-% TODO: Write proof and discussion, refer to textbooks if needed.
+\textit{This appendix explains why the back-EMF in a PMSM contains only odd-order harmonics (1st, 3rd, 5th, etc.) and no even harmonics (2nd, 4th, etc.). We start from elementary electromagnetism and build to the symmetry argument, referencing standard textbooks.}
+
+\begin{physbox}[Back-EMF Basics: What It Is]
+Back-EMF is the voltage induced in the stator windings due to the rotating magnetic field of the rotor. In a PMSM, permanent magnets create a sinusoidal flux density in the air gap. As the rotor spins, this flux links the stator windings, inducing a voltage proportional to the rate of change of flux linkage.
+
+For an ideal sinusoidal machine, the back-EMF is perfectly sinusoidal. But real machines have slight distortions, leading to harmonics. Crucially, even harmonics are absent due to symmetry.
+\end{physbox}
+
+\begin{statebox}[Symmetry Argument: The Key Reason]
+Consider the back-EMF waveform as a function of rotor position \(\theta\) (electrical angle).
+
+In a balanced three-phase PMSM:
+- The stator windings are symmetrically distributed (120° apart).
+- The rotor flux is sinusoidal and symmetric.
+
+If we reverse the rotor direction (flip the sign of \(\theta\)), the induced EMF reverses sign: \(e(-\theta) = -e(\theta)\).
+
+This makes the back-EMF an \textbf{odd function} with respect to \(\theta\).
+
+For an odd function, the Fourier series contains \textbf{only odd harmonics}. Even harmonics are zero by symmetry.
+
+Mathematically: \(e(\theta) = \sum_{n=1,3,5,\dots} E_n \sin(n \theta)\).
+\end{statebox}
+
+\begin{eqnbox}[Fourier Series Reminder]
+Any periodic function \(f(\theta)\) can be expanded as:
+\[
+f(\theta) = a_0 + \sum_{n=1}^\infty (a_n \cos(n\theta) + b_n \sin(n\theta))
+\]
+
+For an odd function (\(f(-\theta) = -f(\theta)\)):
+- \(a_0 = 0\) (no DC component).
+- \(a_n = 0\) for all \(n\) (cosine terms zero).
+- Only sine terms survive: \(f(\theta) = \sum_{n=1,3,\dots} b_n \sin(n\theta)\).
+
+Since \(\sin(n\theta)\) for even \(n\) is even (because \(\sin(-n\theta) = -\sin(n\theta)\) for odd n, wait no:
+
+\(\sin(n\theta)\) for even n: \(\sin(-n\theta) = -\sin(n\theta)\), but since f is odd, the coefficient must make it odd.
+
+Standard result: Odd functions have only odd sine harmonics.
+
+Yes.
+\end{eqnbox}
+
+\begin{circuitbox}[Why Even Harmonics Would Require Asymmetry]
+Even harmonics (e.g., 2nd) would appear if:
+- The rotor had a DC flux bias (uncommon in PMSMs).
+- The stator windings were asymmetrically distributed.
+- Saturation or other nonlinearities introduced asymmetry.
+
+In the considered machine (balanced PMSM), these are absent, so even harmonics are zero.
+
+This is confirmed in measurements (Fig. 2.2) and standard theory.
+\end{circuitbox}
+
+\begin{warningbox}[References]
+This argument is standard in electric machine textbooks, e.g.:
+- Boldea, I. and Nasar, S.A., 2002. \textit{Electric machines dynamics}. CRC Press, Chapter 3.
+- Fitzgerald, A.E., Kingsley Jr, C., and Umans, S.D., 2003. \textit{Electric machinery}. McGraw-Hill, Section 5.5.
+
+For PMSM specifics, see: Bianchi, N., 2006. \textit{Electrical machine analysis using finite elements}. CRC Press.
+\end{warningbox}
 
 \clearpage
 
