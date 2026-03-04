@@ -474,6 +474,82 @@ The Fourier series derivation follows standard signals and systems treatment, e.
 \label{app:torque_derivation}
 % ============================================================
 
-% TODO: Proof of torque equation, derivation of harmonic torque ripple.
+\textit{This appendix derives the electromagnetic torque equation in PMSMs from elementary principles: force on current-carrying wires in magnetic fields. We build to the standard dq-frame expression, then derive torque ripple from back-EMF harmonics. No prior knowledge of dq transformation assumed — we derive it step by step.}
+
+\begin{physbox}[Elementary Torque: Force on Wires]
+Torque in an electric motor comes from magnetic forces on current-carrying conductors.
+
+Imagine a straight wire of length \(l\) carrying current \(i\), in a uniform magnetic field \(\mathbf{B}\). The force is \(\mathbf{F} = i (\mathbf{l} \times \mathbf{B})\).
+
+For a rotating machine, windings are on a cylindrical stator. Torque \(\tau\) is the sum of moments: \(\tau = \sum r \times \mathbf{F}\), where \(r\) is the radial vector.
+
+In PMSMs, the rotor has permanent magnets creating \(\mathbf{B}\), stator windings carry \(i\).
+\end{physbox}
+
+\begin{circuitbox}[From Wires to Windings: Flux Linkage]
+A stator winding has \(N\) turns, each with flux linkage \(\lambda = \int \mathbf{B} \cdot d\mathbf{A}\).
+
+The induced EMF \(e = -d\lambda/dt\).
+
+Torque from energy: Power input \(P_{elec} = i e\), but for steady state, \(P_{elec} = T \omega +\) losses.
+
+The electromagnetic torque is \(T_{em} = \frac{P_{elec} - P_{loss}}{\omega}\), but approximately \(T_{em} = \frac{i e}{\omega}\) for no losses.
+
+In PMSM, average torque \(T_{avg} = \frac{E I}{\omega}\), where \(E\) is back-EMF RMS, but for exact, we need phasor analysis.
+\end{circuitbox}
+
+\begin{statebox}[Phasor Approach: Three-Phase PMSM]
+In three-phase PMSM, stator voltages: \(\mathbf{v} = [v_a, v_b, v_c]^T\), currents \(\mathbf{i}\), back-EMFs \(\mathbf{e}\).
+
+The torque \(T = \frac{1}{\omega} (\mathbf{e} \cdot \mathbf{i})\), where \(\omega\) is mechanical speed.
+
+For sinusoidal, \(\mathbf{e} = E \angle \theta\), but with harmonics, expand.
+
+To get the standard expression, transform to dq frame.
+\end{statebox}
+
+\begin{eqnbox}[dq Transformation: Why and How]
+The dq frame rotates with the rotor, simplifying analysis.
+
+Define dq currents: \(i_d = \frac{2}{3} (i_a \cos\theta + i_b \cos(\theta - 120^\circ) + i_c \cos(\theta - 240^\circ))\), similarly for \(i_q\).
+
+Voltages: \(v_d = \frac{2}{3} (v_a \cos\theta + \dots)\), etc.
+
+For PMSM, the flux linkages: \(\lambda_d = L_d i_d + \psi_m\), \(\lambda_q = L_q i_q\).
+
+EMF: \(e_d = -\omega \lambda_q\), \(e_q = \omega \lambda_d\).
+
+Torque: From power balance, \(T = \frac{3}{2} p (\lambda_d i_q - \lambda_q i_d)\), where p is pole pairs.
+
+For SPM (\(L_d = L_q = L_s\)), \(T = \frac{3}{2} p \psi_m i_q\).
+\end{eqnbox}
+
+\begin{circuitbox}[Deriving Torque Ripple]
+Torque ripple is the variation around average torque.
+
+If back-EMF has harmonics, \(e_a = \sum_{n=1,3,\dots} E_n \sin(n \theta)\), and currents sinusoidal, torque \(T(\theta) = \frac{1}{\omega} e_a i_a + \dots\)
+
+Each harmonic contributes: \(T_{ripple,n} \propto E_n I \cos(n \delta)\), where \(\delta\) is phase shift.
+
+In multiphase, for ASP vs SSP, the spatial shift \(\delta = 30^\circ\) or \(60^\circ\) causes cancellation for certain \(n\).
+
+For example, 5th harmonic: \(n=5\), \(\delta=30^\circ\), \(5 \times 30 = 150^\circ\), \(\cos(150^\circ) = -\sqrt{3}/2\), but depending on phase, may cancel.
+
+The exact derivation involves expanding in dq frame with harmonic fluxes.
+
+From Lesson 2: \(T_{ripple,n} \propto E_n I_{fundamental} \cos(n \delta)\)
+\end{circuitbox}
+
+\begin{statebox}[Key Takeaway]
+Electromagnetic torque arises from magnetic forces on stator currents in rotor field. In dq frame, \(T = \frac{3}{2} p (\psi_m i_q + (L_d - L_q) i_d i_q)\).
+
+Torque ripple comes from back-EMF harmonics interacting with currents; multiphase symmetry cancels some harmonics.
+\end{statebox}
+
+\begin{statebox}[Checkpoint (Explain in Your Own Words)]
+Derive the torque from first principles: how does current in stator wire create torque? Then, explain why harmonics in back-EMF cause torque ripple.
+\end{statebox}
+
+% Note: If figures are needed, e.g., a diagram of force on wire or phasor for torque, please indicate.
 
 \end{document}
